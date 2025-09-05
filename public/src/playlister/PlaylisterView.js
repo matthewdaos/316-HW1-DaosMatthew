@@ -42,6 +42,7 @@ export default class PlaylisterView {
         textInput.id += newList.id;
 
         playlistCard.querySelector('input[id^="delete-list-button-"]').id += newList.id;
+        playlistCard.querySelector('input[id^="duplicate-list-button-"]').id += newList.id;
 
         playlistCard.hidden = false;
 
