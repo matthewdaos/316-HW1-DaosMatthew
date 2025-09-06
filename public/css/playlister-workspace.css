@@ -194,6 +194,10 @@ body {
   color: red;
 }
 
+.song-card-year {
+  color: black;
+}
+
 .is-dragging {
   border: 2px black solid;
   opacity: 0.5;
