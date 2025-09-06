@@ -175,8 +175,16 @@ export default class PlaylisterView {
             let youTubeLink = document.createElement("a");
             youTubeLink.classList.add("song-card-title");
             youTubeLink.href = "https://www.youtube.com/watch?v=" + song.youTubeId;
-            youTubeLink.target = 1;
+            youTubeLink.target = "_blank";
             youTubeLink.innerHTML = song.title;
+
+            const yearExist = song.year !== undefined && song.year !== null && String(song.year).trim() !== "";
+            let yearSpan = null;
+            if(yearExist) {
+                yearSpan = document.createElement("span");
+                yearSpan.className = "song-card-year";
+                yearSpan.innerHTML = ` (${song.year})`;
+            }
 
             let bySpan = document.createElement("span");
             bySpan.className = "song-card-by";
@@ -190,6 +198,7 @@ export default class PlaylisterView {
             let songNumber = document.createTextNode("" + (i + 1) + ". ");
             itemDiv.appendChild(songNumber);
             itemDiv.appendChild(youTubeLink);
+            if(yearSpan) itemDiv.appendChild(yearSpan);
             itemDiv.appendChild(bySpan);
             itemDiv.appendChild(artistSpan);
 
