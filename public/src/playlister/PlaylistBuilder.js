@@ -72,7 +72,7 @@ export default class PlaylistBuilder {
         newPlaylist.name = initName;
         newPlaylist.songs = [];
         initSongs.forEach(song => {
-            let newSong = new PlaylistSongPrototype(song.title, song.artist, song.youTubeId);
+            let newSong = new PlaylistSongPrototype(song.title, song.artist, song.youTubeId, song.year);
             newPlaylist.songs.push(newSong);
         });
         return newPlaylist;
