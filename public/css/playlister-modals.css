@@ -110,10 +110,20 @@ span {
 
 #you-tube-id-prompt {
   grid-column: 1 / 2;
-  grid-row: 3 / 4;
+  grid-row: 4 / 5;
 }
 
 #edit-song-modal-youTubeId-textfield {
+  grid-column: 2 / 3;
+  grid-row: 4 / 5;
+}
+
+#year-prompt {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+}
+
+#edit-song-year-modal {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
 }
