@@ -15,7 +15,7 @@ export default class PlaylistSongPrototype {
      * @param {string} initTitle The song title.
      * @param {string} initArtist The song artist.
      * @param {string} initYouTubeId The YouTube id for the song as it would appear in a link.
-     * @param {number} initYear The song year
+     * @param {string} initYear The song year.
      */
     constructor(initTitle, initArtist, initYouTubeId, initYear) {
         this.title = initTitle;
