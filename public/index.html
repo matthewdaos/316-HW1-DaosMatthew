@@ -71,6 +71,15 @@
                 value="🗑" />
         </div>
 
+        <!-- PROTOTYPE FOR MAKING SONG CARDS-->
+         <div hidden id="song-card-prototype" class="song-card unselected-song-card">
+            <span id="song-number-"></span>
+            <a id="song-title-link-" class="song-card-title" target="1"></a>
+            <span id="song-year-" class="song-card-year"></span>
+            <span class="song-card-by"> by </span>
+            <span id="song-artist-" class="song-card-artist"></span>
+            <input id="remove-song-" type="button" class="song-card-button", value="🗑"/>
+         </div>
 
         <!-- MODAL (i.e. DIALOG) FOR EDITING SONG DATA -->
         <div id="edit-song-modal" class="modal" data-animation="slideInOutLeft">
@@ -79,7 +88,7 @@
                 <div id="edit-song-modal-content" class="modal-center">
                     <div id="title-prompt" class="modal-prompt">Title:</div><input id="edit-song-modal-title-textfield" class='modal-textfield' type="text" value="?" />
                     <div id="artist-prompt" class="modal-prompt">Artist:</div><input id="edit-song-modal-artist-textfield" class='modal-textfield' type="text" value="?" />
-                    <div id="year-prompt" class="modal-prompt">Year:</div><input id="edit-song-modal-year-textfield" class='modal-textfield' type="number" min=1800 max=2100 />
+                    <div id="year-prompt" class="modal-prompt">Year:</div><input id="edit-song-modal-year-textfield" class='modal-textfield' type="number" />
                     <div id="you-tube-id-prompt" class="modal-prompt">You Tube Id:</div><input id="edit-song-modal-youTubeId-textfield" class='modal-textfield' type="text" value="?" />
                 </div>
                 <div class="modal-south">
@@ -88,6 +97,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL FOR VERIFYING REMOVAL OF SONG -->
+         <div class="modal" id="remove-song-modal" data-animation="slideInOutLeft">
+            <div class="modal-root" id="verify-remove-song-root">
+                <div class="modal-north">
+                    Remove song?
+                </div>
+                <div class="modal-center">
+                    <div class="modal-center-content">
+                        Are you sure you wish to permanently remove <span id="remove-song-span"></span> from the playlist?
+                    </div>
+                </div>
+                <div class="modal-south">
+                    <input type="button" id="remove-song-confirm-button" class="modal-button" value="Confirm" />
+                    <input type="button" id="remove-song-cancel-button" class="modal-button" value="Cancel" />
+                </div>
+            </div>
+         </div>
 
         <!-- MODAL (i.e. dialog) FOR VERIFYING THE DELETION OF A LIST -->
         <div class="modal" id="delete-list-modal" data-animation="slideInOutLeft">
