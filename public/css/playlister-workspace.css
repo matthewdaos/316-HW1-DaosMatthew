@@ -182,6 +182,11 @@ body {
   color: var(--swatch-link-hover);
 }
 
+.song-card:hover .song-card-year,
+.song-card:hover .song-card-by {
+  color: white;
+}
+
 .song-card-title:active {
   color: var(--swatch-link-active);
 }
