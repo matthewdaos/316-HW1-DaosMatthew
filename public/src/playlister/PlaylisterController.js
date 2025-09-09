@@ -104,6 +104,24 @@ export default class PlaylisterController {
             let deleteListModal = document.getElementById("delete-list-modal");
             deleteListModal.classList.remove("is-visible");
         }
+
+        // RESPOND TO THE USER CLOSING THE DELETE SONG MODAL
+        document.getElementById("remove-song-cancel-button").onclick = (event) => {
+            let deleteSongModal = document.getElementById("remove-song-modal");
+            deleteSongModal.classList.remove("is-visible");
+            this.model.toggleConfirmDialogOpen();
+        }
+
+        // RESPOND TO THE USER CONFIRMING THE DELETE SONG MODAL
+        document.getElementById("remove-song-confirm-button").onclick = (event) => {
+            let idx = this.model.getRemoveSongIndex();
+            this.model.addTransactionToRemoveSong(idx);
+
+            let deleteSongModal = document.getElementById("remove-song-modal");
+            deleteSongModal.classList.remove("is-visible");
+            this.model.toggleConfirmDialogOpen();
+        }
+        
     }
 
     /**
@@ -212,8 +230,8 @@ export default class PlaylisterController {
                 // LOAD THE SONG DATA INTO THE MODAL
                 document.getElementById("edit-song-modal-title-textfield").value = song.title;
                 document.getElementById("edit-song-modal-artist-textfield").value = song.artist;
-                document.getElementById("edit-song-modal-year-textfield").value = (song.year ?? "").toString();
                 document.getElementById("edit-song-modal-youTubeId-textfield").value = song.youTubeId;
+                document.getElementById("edit-song-modal-year-textfield").value = song.year || "";
 
                 // OPEN UP THE MODAL
                 let editSongModal = document.getElementById("edit-song-modal");
@@ -221,6 +239,7 @@ export default class PlaylisterController {
 
                 // IGNORE ALL NON-MODAL EVENTS
                 this.model.toggleConfirmDialogOpen();
+
             }
 
             // USER WANTS TO REMOVE A SONG FROM THE PLAYLIST
@@ -230,10 +249,20 @@ export default class PlaylisterController {
                 this.ignoreParentClick(event);
 
                 // RECORD WHICH SONG SO THE MODAL KNOWS AND UPDATE THE MODAL TEXT
-                let songIndex = Number.parseInt(event.target.id.split("-")[2]);               
+                let songIndex = Number.parseInt(event.target.id.split("-")[2]);  
+                this.model.setRemoveSongIndex(songIndex);
+                
+                // GET SONG FROM MODAL
+                let song = this.model.getSong(songIndex);
+                let songTitle = song.title;
+                let removeSongSpan = document.getElementById("remove-song-span");
+                removeSongSpan.innerHTML="";
+                removeSongSpan.appendChild(document.createTextNode(songTitle));
 
-                // PROCESS THE REMOVE SONG EVENT
-                this.model.addTransactionToRemoveSong(songIndex);
+                // OPEN REMOVE SONG VERIFICATION DIALOG
+                let removeSongModal = document.getElementById("remove-song-modal");
+                removeSongModal.classList.add("is-visible");
+                this.model.toggleConfirmDialogOpen();
             }
 
             // NOW SETUP ALL CARD DRAGGING HANDLERS AS THE USER MAY WISH TO CHANGE
