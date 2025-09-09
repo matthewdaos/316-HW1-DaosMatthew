@@ -28,10 +28,10 @@ export default class PlaylisterController {
         // SETUP THE MODAL HANDLERS
         this.registerModalHandlers();
 
-        const addListBtn = document.getElementById("add-list-button");
+        let addListBtn = document.getElementById("add-list-button");
         if(addListBtn) {
             addListBtn.onmousedown = (event) => {
-                const newList = this.model.addNewList("Untitled", []);
+                let newList = this.model.addNewList("Untitled", []);
                 this.model.saveLists();
                 this.model.loadList(newList.id);
                 this.model.setListNameBeingChanged(true, newList.id);
@@ -149,6 +149,13 @@ export default class PlaylisterController {
             this.model.toggleConfirmDialogOpen();
         }
 
+        // HANDLING DUPLICATING A PLAYLIST
+        document.getElementById("duplicate-list-button-" + id).onmousedown = (event) => {
+            this.ignoreParentClick(event);
+            this.model.duplicateList(id);
+            this.model.saveLists();
+        }
+
         // FOR RENAMING THE LIST NAME
         document.getElementById("playlist-card-" + id).ondblclick = (event) => {
             let text = document.getElementById("playlist-card-text-" + id)
@@ -205,8 +212,8 @@ export default class PlaylisterController {
                 // LOAD THE SONG DATA INTO THE MODAL
                 document.getElementById("edit-song-modal-title-textfield").value = song.title;
                 document.getElementById("edit-song-modal-artist-textfield").value = song.artist;
-                document.getElementById("edit-song-modal-youTubeId-textfield").value = song.youTubeId;
                 document.getElementById("edit-song-modal-year-textfield").value = (song.year ?? "").toString();
+                document.getElementById("edit-song-modal-youTubeId-textfield").value = song.youTubeId;
 
                 // OPEN UP THE MODAL
                 let editSongModal = document.getElementById("edit-song-modal");
