@@ -235,6 +235,15 @@ export default class PlaylisterModel {
     }
 
     /**
+     * Accessor method for getting the index of song being removed
+     * 
+     * @returns {number} The index of the song being removed
+     */
+    getRemoveSongIndex() {
+        return this.removeSongIndex;
+    }
+
+    /**
      * Accessor method for getting the song at index
      * 
      * @param {number} index The index of the song to retrieve
@@ -431,6 +440,16 @@ export default class PlaylisterModel {
         this.view.refreshSongCards(this.currentList);
         this.view.highlightList(listToSelect.id);
         this.view.updateStatusBar(this.hasCurrentList(), listToSelect.name);
+    }
+
+    /**
+     * Mutator method that removes the songs at the given index, which is used such that
+     * the dialog event handler verification can coordinate a proper response. 
+     * 
+     * @param {number} initIndex The index of song to remove
+     */
+    setRemoveSongIndex(initIndex) {
+        this.removeSongIndex = initIndex;
     }
 
     /**
