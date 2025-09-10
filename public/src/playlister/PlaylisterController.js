@@ -77,6 +77,29 @@ export default class PlaylisterController {
             editSongModal.classList.remove("is-visible");
         }
 
+        // RESPOND TO THE USER CONFIRMING THE EDIT SONG MODAL VIA THE CONFIRM BUTTON
+        document.getElementById("edit-song-confirm-button").onclick = (event) => {
+            // GET SONG FROM INDEX
+            let songIndex = this.model.getEditSongIndex();
+
+            // GET VALUES
+            let title = document.getElementById("edit-song-modal-title-textfield").value;
+            let artist = document.getElementById("edit-song-modal-artist-textfield").value;
+            let youTubeId = document.getElementById("edit-song-modal-youTubeId-textfield").value;
+            let yearValue = document.getElementById("edit-song-modal-year-textfield").value;
+            let year = yearValue ? parseInt(yearValue) : undefined;
+
+            // UPDATE SONG
+            this.model.updateSong(songIndex, title, artist, youTubeId, year);
+
+            // ALLOW OTHER TRANSACTIONS
+            this.model.toggleConfirmDialogOpen();
+
+            // CLOSE THE MODAL
+            let editSongModal = document.getElementById("edit-song-modal");
+            editSongModal.classList.remove("is-visible");
+        }
+
         // RESPOND TO THE USER CONFIRMING TO DELETE A PLAYLIST
         document.getElementById("delete-list-confirm-button").onclick = (event) => {
             // NOTE THAT WE SET THE ID OF THE LIST TO REMOVE
@@ -107,18 +130,25 @@ export default class PlaylisterController {
 
         // RESPOND TO THE USER CLOSING THE DELETE SONG MODAL
         document.getElementById("remove-song-cancel-button").onclick = (event) => {
+            // CLOSE THE MODAL
             let deleteSongModal = document.getElementById("remove-song-modal");
             deleteSongModal.classList.remove("is-visible");
+
+            // ALLOW OTHER TRANSACTIONS
             this.model.toggleConfirmDialogOpen();
         }
 
         // RESPOND TO THE USER CONFIRMING THE DELETE SONG MODAL
         document.getElementById("remove-song-confirm-button").onclick = (event) => {
+            // DELETE THE SONG, UNDOABLE
             let idx = this.model.getRemoveSongIndex();
             this.model.addTransactionToRemoveSong(idx);
 
+            // CLOSE THE MODAL
             let deleteSongModal = document.getElementById("remove-song-modal");
             deleteSongModal.classList.remove("is-visible");
+
+            // ALLOW OTHER TRANSACTIONS
             this.model.toggleConfirmDialogOpen();
         }
         
