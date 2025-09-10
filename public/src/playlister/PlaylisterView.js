@@ -166,52 +166,49 @@ export default class PlaylisterView {
         for (let i = 0; i < playlist.songs.length; i++) {
             // MAKE AN ITEM (i.e. CARD)
             let song = playlist.getSongAt(i);
-            let itemDiv = document.createElement("div");
-            itemDiv.classList.add("song-card");
-            itemDiv.classList.add("unselected-song-card");
-            itemDiv.id = "song-card-" + (i + 1);
+
+            // CLONE TEMPLATE
+            let proto = document.getElementById("song-card-prototype");
+            let card = proto.cloneNode(true);
+            card.hidden = false;
+
+            // RUNTIME ID 
+            let index = i + 1;
+            card.id = "song-card-" + index;
+
+            //NUMBER
+            let numSpan = card.querySelector("#song-number-");
+            numSpan.id = "song-card-number-" + index;
+            numSpan.textContent = index + ". ";
 
             // HAVE THE TEXT LINK TO THE YOUTUBE VIDEO
-            let youTubeLink = document.createElement("a");
-            youTubeLink.classList.add("song-card-title");
+            let youTubeLink = card.querySelector("#song-title-link-");
+            youTubeLink.id = "song-card-title-" + index;
+            youTubeLink.textContent = song.title;
             youTubeLink.href = "https://www.youtube.com/watch?v=" + song.youTubeId;
-            youTubeLink.target = "_blank";
-            youTubeLink.innerHTML = song.title;
+            youTubeLink.target = 1;
 
-            const yearExist = song.year !== undefined && song.year !== null && String(song.year).trim() !== "";
-            let yearSpan = null;
+            // YEAR 
+            let yearSpan = card.querySelector("#song-year-");
+            yearSpan.id = "song-card-year-" + index;
+            let yearExist = song.year !== undefined && song.year !== null && String(song.year).trim() !== "";
             if(yearExist) {
-                yearSpan = document.createElement("span");
-                yearSpan.className = "song-card-year";
-                yearSpan.innerHTML = ` (${song.year})`;
+                yearSpan.textContent = " (" + song.year + ") ";
+                yearSpan.hidden = false;
+            } else {
+                yearSpan.textContent = "";
             }
 
-            let bySpan = document.createElement("span");
-            bySpan.className = "song-card-by";
-            bySpan.innerHTML = " by ";
+            // ARTIST
+            let artistSpan = card.querySelector("#song-artist-");
+            artistSpan.id = "song-card-artist-" + index;
+            artistSpan.textContent = song.artist;
 
-            let artistSpan = document.createElement("span");
-            artistSpan.className = "song-card-artist";
-            artistSpan.innerHTML = song.artist;
-
-            // PUT THE CONTENT INTO THE CARD
-            let songNumber = document.createTextNode("" + (i + 1) + ". ");
-            itemDiv.appendChild(songNumber);
-            itemDiv.appendChild(youTubeLink);
-            if(yearSpan) itemDiv.appendChild(yearSpan);
-            itemDiv.appendChild(bySpan);
-            itemDiv.appendChild(artistSpan);
-
-            // MAKE THE DELETE LIST BUTTON
-            let deleteButton = document.createElement("input");
-            deleteButton.setAttribute("type", "button");
-            deleteButton.setAttribute("id", "remove-song-" + i);
-            deleteButton.setAttribute("class", "song-card-button");
-            deleteButton.setAttribute("value", "\u2715");
-            itemDiv.appendChild(deleteButton);
+            let removeButton = card.querySelector('input[id^="remove-song-"]');
+            removeButton.id = "remove-song-" + i;
 
             // AND PUT THE CARD INTO THE UI
-            itemsDiv.appendChild(itemDiv);
+            itemsDiv.appendChild(card);
         }
         // NOW THAT THE CONTROLS EXIST WE CAN REGISTER EVENT
         // HANDLERS FOR THEM
