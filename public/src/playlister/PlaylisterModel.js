@@ -571,7 +571,7 @@ export default class PlaylisterModel {
             let song = this.currentList.songs[index];
             song.title = title;
             song.artist = artist;
-            song.youtubeId = youtubeId;
+            song.youTubeId = youtubeId;
             song.year = year;
 
             this.view.refreshSongCards(this.currentList);
