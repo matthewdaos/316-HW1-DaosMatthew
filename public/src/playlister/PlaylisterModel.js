@@ -556,4 +556,26 @@ export default class PlaylisterModel {
                             this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
         }
     }
+
+    /**
+     * Updates song at given index
+     * 
+     * @param {number} index Song index
+     * @param {string} title Title of song
+     * @param {string} artist Artist of song
+     * @param {string} youtubeId Youtube link for song
+     * @param {number} year Year of song
+     */
+    updateSong(index, title, artist, youtubeId, year) {
+        if(this.hasCurrentList() && index >= 0 && index < this.currentList.songs.length) {
+            let song = this.currentList.songs[index];
+            song.title = title;
+            song.artist = artist;
+            song.youtubeId = youtubeId;
+            song.year = year;
+
+            this.view.refreshSongCards(this.currentList);
+            this.saveLists();
+        }
+    }
 }
