@@ -31,6 +31,7 @@ export default class PlaylisterController {
         let addListBtn = document.getElementById("add-list-button");
         if(addListBtn) {
             addListBtn.onmousedown = (event) => {
+                if(addListBtn.disabled) return;
                 let newList = this.model.addNewList("Untitled", []);
                 this.model.saveLists();
                 this.model.loadList(newList.id);
