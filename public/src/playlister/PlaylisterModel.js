@@ -76,7 +76,7 @@ export default class PlaylisterModel {
      */
     addTransactionToCreateSong() {
         // ADD A SONG
-        let song = new PlaylistSongPrototype("Untitled", "???", 2000, "dQw4w9WgXcQ");
+        let song = new PlaylistSongPrototype("Untitled", "???", "dQw4w9WgXcQ", 2000);
         let appendIndex = this.getPlaylistSize();
         let transaction = new CreateSong_Transaction(this, appendIndex, song);
         this.tps.processTransaction(transaction);
@@ -486,7 +486,7 @@ export default class PlaylisterModel {
         } else {
             this.view.hidePlaylistTextInput(id);
         }
-        
+
         this.view.updateToolbarButtons(this.hasCurrentList(), 
                             this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
     }
