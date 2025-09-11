@@ -81,7 +81,7 @@ export default class PlaylisterModel {
         let transaction = new CreateSong_Transaction(this, appendIndex, song);
         this.tps.processTransaction(transaction);
         this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
     }
 
     /**
@@ -94,7 +94,7 @@ export default class PlaylisterModel {
         let transaction = new MoveSong_Transaction(this, fromIndex, onIndex);
         this.tps.processTransaction(transaction);
         this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
     }
 
     /**
@@ -107,7 +107,7 @@ export default class PlaylisterModel {
         let transaction = new RemoveSong_Transaction(this, index, song);
         this.tps.processTransaction(transaction);
         this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
     }
 
     /**
@@ -318,7 +318,7 @@ export default class PlaylisterModel {
             listName = this.currentList.name;
         this.view.updateStatusBar(this.hasCurrentList(), listName);
         this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
     }
 
     /**
@@ -381,7 +381,7 @@ export default class PlaylisterModel {
         if (this.tps.hasTransactionToDo()) {
             this.tps.doTransaction();
             this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
         }
     }
 
@@ -415,8 +415,7 @@ export default class PlaylisterModel {
             this.view.hidePlaylistTextInput(this.currentList.id);        
             this.view.updateStatusBar(this, this.currentList.name);
             this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
-
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
         }
     }
 
@@ -481,9 +480,15 @@ export default class PlaylisterModel {
      */
     setListNameBeingChanged(flag, id) {
         this.listNameBeingChanged = flag;
-        this.view.showPlaylistTextInput(id);
+        
+        if(flag) {
+            this.view.showPlaylistTextInput(id);
+        } else {
+            this.view.hidePlaylistTextInput(id);
+        }
+        
         this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
     }
 
     /**
@@ -524,7 +529,7 @@ export default class PlaylisterModel {
     toggleConfirmDialogOpen() {
         this.confirmDialogOpen = !this.confirmDialogOpen;
         this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
         if (!this.confirmDialogOpen)
             this.view.closeEditSongModal();
         return this.confirmDialogOpen;
@@ -538,7 +543,7 @@ export default class PlaylisterModel {
         if (this.tps.hasTransactionToUndo()) {
             this.tps.undoTransaction();
             this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
         }
     }
 
@@ -553,7 +558,7 @@ export default class PlaylisterModel {
             this.view.clearWorkspace();
             this.tps.clearAllTransactions();
             this.view.updateToolbarButtons(this.hasCurrentList(), 
-                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo());
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
         }
     }
 
