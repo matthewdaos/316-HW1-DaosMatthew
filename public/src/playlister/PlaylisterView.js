@@ -204,6 +204,7 @@ export default class PlaylisterView {
             artistSpan.id = "song-card-artist-" + index;
             artistSpan.textContent = song.artist;
 
+            // REMOVE BUTTON
             let removeButton = card.querySelector('input[id^="remove-song-"]');
             removeButton.id = "remove-song-" + i;
 
@@ -268,14 +269,41 @@ export default class PlaylisterView {
      * Implements our foolproof design strategy so that when toolbar
      * buttons cannot be used they are disabled.
      */
-    updateToolbarButtons(hasCurrentList, isConfirmDialogOpen, hasTransactionToDo, hasTransactionToUndo) {
-        this.enableButton("close-button");
-        this.enableButton("add-song-button");
+    updateToolbarButtons(hasCurrentList, isConfirmDialogOpen, hasTransactionToDo, hasTransactionToUndo, isNameBeingChanged) {
+        // ADD LIST BUTTON
+        if(isNameBeingChanged || isConfirmDialogOpen) {
+            this.disableButton("add-list-button");
+        } else {
+            this.enableButton("add-list-button");
+        }
+
+        // ADD SONG BUTTON
+        if(!hasCurrentList && isConfirmDialogOpen && isNameBeingChanged) {
+            this.disableButton("add-song-button");
+        } else {
+            this.enableButton("add-song-button");
+        }
+
+        //CLOSE BUTTON
+        if(!hasCurrentList && isConfirmDialogOpen) {
+            this.disableButton("close-button");
+        } else {
+            this.enableButton("close-button");
+        }
+
+        // UNDO BUTTON
         if (!hasTransactionToUndo) {
             this.disableButton("undo-button");
         }
         else {
             this.enableButton("undo-button");
+        }
+
+        // REDO BUTTON
+        if(!hasTransactionToDo) {
+            this.disableButton("redo-button");
+        } else {
+            this.enableButton("redo-button");
         }
     }
 }
