@@ -115,10 +115,10 @@ export default class PlaylisterModel {
      * Adds an undoable transaction for updating a song to the transaction stack.
      * 
      * @param {number} index The index of the transaction to update
-     * @param {PlaylistSongPrototype} title 
-     * @param {PlaylistSongPrototype} artist 
-     * @param {PlaylistSongPrototype} youTubeId 
-     * @param {PlaylistSongPrototype} year 
+     * @param {PlaylistSongPrototype} title Title of song
+     * @param {PlaylistSongPrototype} artist Artist of song
+     * @param {PlaylistSongPrototype} youTubeId Youtube Link to song
+     * @param {PlaylistSongPrototype} year Year of song
      */
     addTransactionToUpdateSong(index, title, artist, youTubeId, year) {
         let oldSong = this.getSong(index);
