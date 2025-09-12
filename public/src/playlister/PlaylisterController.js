@@ -90,8 +90,8 @@ export default class PlaylisterController {
             let yearValue = document.getElementById("edit-song-modal-year-textfield").value;
             let year = yearValue ? parseInt(yearValue) : undefined;
 
-            // UPDATE SONG
-            this.model.updateSong(songIndex, title, artist, youTubeId, year);
+            // UPDATE TRANSACTION
+            this.model.addTransactionToUpdateSong(songIndex, title, artist, youTubeId, year);
 
             // ALLOW OTHER TRANSACTIONS
             this.model.toggleConfirmDialogOpen();
@@ -100,6 +100,14 @@ export default class PlaylisterController {
             let editSongModal = document.getElementById("edit-song-modal");
             editSongModal.classList.remove("is-visible");
         }
+
+        // ENTER KEY 
+        document.addEventListener("keydown", (e) => {
+            if(e.key === "Enter") {
+                e.preventDefault();
+                document.getElementById("edit-song-confirm-button").click();
+            }
+        });
 
         // RESPOND TO THE USER CONFIRMING TO DELETE A PLAYLIST
         document.getElementById("delete-list-confirm-button").onclick = (event) => {
