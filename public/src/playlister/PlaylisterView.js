@@ -270,22 +270,32 @@ export default class PlaylisterView {
      * buttons cannot be used they are disabled.
      */
     updateToolbarButtons(hasCurrentList, isConfirmDialogOpen, hasTransactionToDo, hasTransactionToUndo, isNameBeingChanged) {
+        // DISABLE EVERYTHING IN TOOLBAR
+        if(isConfirmDialogOpen) {
+            this.disableButton("add-list-button");
+            this.disableButton("add-song-button");
+            this.disableButton("close-button");
+            this.disableButton("undo-button");
+            this.disableButton("redo-button");
+            return;
+        }
+        
         // ADD LIST BUTTON
-        if(isNameBeingChanged || isConfirmDialogOpen) {
+        if(isNameBeingChanged) {
             this.disableButton("add-list-button");
         } else {
             this.enableButton("add-list-button");
         }
 
         // ADD SONG BUTTON
-        if(!hasCurrentList && isConfirmDialogOpen && isNameBeingChanged) {
+        if(!hasCurrentList && isNameBeingChanged) {
             this.disableButton("add-song-button");
         } else {
             this.enableButton("add-song-button");
         }
 
         //CLOSE BUTTON
-        if(!hasCurrentList && isConfirmDialogOpen) {
+        if(!hasCurrentList) {
             this.disableButton("close-button");
         } else {
             this.enableButton("close-button");
