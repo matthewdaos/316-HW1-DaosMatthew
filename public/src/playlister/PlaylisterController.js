@@ -28,6 +28,7 @@ export default class PlaylisterController {
         // SETUP THE MODAL HANDLERS
         this.registerModalHandlers();
 
+        // ADD PLAYLIST BUTTON
         let addListBtn = document.getElementById("add-list-button");
         if(addListBtn) {
             addListBtn.onmousedown = (event) => {
@@ -99,9 +100,10 @@ export default class PlaylisterController {
             // CLOSE THE MODAL
             let editSongModal = document.getElementById("edit-song-modal");
             editSongModal.classList.remove("is-visible");
+
         }
 
-        // ENTER KEY 
+        // FIRE EVENT HTTING ENTER KEY
         document.addEventListener("keydown", (e) => {
             if(e.key === "Enter") {
                 e.preventDefault();
