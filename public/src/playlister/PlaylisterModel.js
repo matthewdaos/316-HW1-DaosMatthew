@@ -4,6 +4,7 @@ import PlaylistSongPrototype from './PlaylistSongPrototype.js';
 import CreateSong_Transaction from "./transactions/CreateSong_Transaction.js";
 import MoveSong_Transaction from "./transactions/MoveSong_Transaction.js";
 import RemoveSong_Transaction from "./transactions/RemoveSong_Transaction.js";
+import UpdateSong_Transaction from './transactions/UpdateSong_Transaction.js';
 import PlaylistBuilder from './PlaylistBuilder.js';
 
 /**
@@ -105,6 +106,30 @@ export default class PlaylisterModel {
     addTransactionToRemoveSong(index) {
         let song = this.getSong(index);
         let transaction = new RemoveSong_Transaction(this, index, song);
+        this.tps.processTransaction(transaction);
+        this.view.updateToolbarButtons(this.hasCurrentList(), 
+                            this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
+    }
+
+    /**
+     * Adds an undoable transaction for updating a song to the transaction stack.
+     * 
+     * @param {number} index The index of the transaction to update
+     * @param {PlaylistSongPrototype} title 
+     * @param {PlaylistSongPrototype} artist 
+     * @param {PlaylistSongPrototype} youTubeId 
+     * @param {PlaylistSongPrototype} year 
+     */
+    addTransactionToUpdateSong(index, title, artist, youTubeId, year) {
+        let oldSong = this.getSong(index);
+        let oldValues = {
+            title: oldSong.title,
+            artist: oldSong.artist,
+            youTubeId: oldSong.youTubeId,
+            year: oldSong.year
+        };
+        let newValues = {title, artist, youTubeId, year};
+        let transaction = new UpdateSong_Transaction(this, index, oldValues, newValues);
         this.tps.processTransaction(transaction);
         this.view.updateToolbarButtons(this.hasCurrentList(), 
                             this.confirmDialogOpen, this.tps.hasTransactionToDo(), this.tps.hasTransactionToUndo(), this.isListNameBeingChanged());
@@ -571,12 +596,12 @@ export default class PlaylisterModel {
      * @param {string} youtubeId Youtube link for song
      * @param {number} year Year of song
      */
-    updateSong(index, title, artist, youtubeId, year) {
+    updateSong(index, title, artist, youTubeId, year) {
         if(this.hasCurrentList() && index >= 0 && index < this.currentList.songs.length) {
             let song = this.currentList.songs[index];
             song.title = title;
             song.artist = artist;
-            song.youTubeId = youtubeId;
+            song.youTubeId = youTubeId;
             song.year = year;
 
             this.view.refreshSongCards(this.currentList);
