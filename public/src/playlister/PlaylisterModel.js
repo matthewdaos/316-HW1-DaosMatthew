@@ -177,10 +177,12 @@ export default class PlaylisterModel {
     duplicateList(id) {
         let ogPlaylist = this.getPlaylist(id);
         if(ogPlaylist) {
-            let duplicateSongs = [];
-            ogPlaylist.songs.forEach(song => {
-                duplicateSongs.push(song.clone());
-            });
+            let duplicateSongs = ogPlaylist.songs.map(song => ({
+                title: song.title,
+                artist: song.artist,
+                youTubeId: song.youTubeId,
+                year: song.year
+            }));
 
             let duplicateName = ogPlaylist.name + " (Copy)";
             let duplicatePlaylist = this.addNewList(duplicateName, duplicateSongs);
