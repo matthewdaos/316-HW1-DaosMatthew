@@ -104,7 +104,8 @@ export default class PlaylisterController {
         }
 
         // FIRE EVENT HTTING ENTER KEY
-        document.addEventListener("keydown", (e) => {
+        let editSongModalRoot = document.getElementById("edit-song-root");
+        editSongModalRoot.addEventListener("keydown", (e) => {
             if(e.key === "Enter") {
                 e.preventDefault();
                 document.getElementById("edit-song-confirm-button").click();
